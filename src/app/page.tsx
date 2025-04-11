@@ -3,9 +3,9 @@
 import Annotation from "@/components/annotation";
 import styles from "./page.module.css";
 import { useEffect, useState } from "react";
-import AnnotationMenu from "@/components/annotation-menu/annotation-menu";
+import AnnotationControls from "@/components/annotation-controls/annotation-controls";
 import { AnnotationMode } from "./types";
-import ImageUploader from "@/components/image-uploader/image-uploader";
+import ImageControls from "@/components/image-controls/image-controls";
 
 export default function Home() {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
@@ -24,13 +24,11 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <AnnotationMenu mode={mode} setMode={setMode} />
-        <div>
-          <button onClick={() => setExportTrigger((value) => value + 1)}>
-            Export
-          </button>
-          <ImageUploader setBase64Image={setBase64Image} />
-        </div>
+        <AnnotationControls mode={mode} setMode={setMode} />
+        <ImageControls
+          setBase64Image={setBase64Image}
+          setExportTrigger={setExportTrigger}
+        />
       </header>
       <main className={styles.main}>
         <div className={styles.image_container}>

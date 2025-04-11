@@ -1,12 +1,12 @@
 import { AnnotationMode } from "@/app/types";
-import styles from "./annotation-menu.module.css";
+import styles from "./annotation-controls.module.css";
 
-type AnnotationMenuProps = {
+type AnnotationControlsProps = {
   mode: AnnotationMode;
   setMode: (mode: AnnotationMode) => void;
 };
 
-const AnnotationMenu = ({ mode, setMode }: AnnotationMenuProps) => {
+const AnnotationControls = ({ mode, setMode }: AnnotationControlsProps) => {
   return (
     <div className={styles.annotation_menu}>
       <button
@@ -25,4 +25,4 @@ const AnnotationMenu = ({ mode, setMode }: AnnotationMenuProps) => {
   );
 };
 
-export default AnnotationMenu;
+export default AnnotationControls;
