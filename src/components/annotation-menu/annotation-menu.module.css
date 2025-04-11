@@ -1,0 +1,5 @@
+.annotation_menu {
+  display: flex;
+  gap: 10px;
+  margin-left: 32px;
+}
