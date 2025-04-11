@@ -1,4 +1,4 @@
-import { Annotation, Point, VoidClick } from "./annotation";
+import { Annotation, AnnotationState, Point, VoidClick } from "./annotation";
 
 const isPointInsidePolygon = (x: number, y: number, polygonPoints: Point[]) => {
   let inside = false;
@@ -23,30 +23,25 @@ const distance = (p1: Point, p2: Point) => {
   return Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
 };
 
-type State = {
-  points: Point[];
-  isDrawing: boolean;
-  previewPoint: Point | null;
+type PolygonState = AnnotationState & {
   isFinalized: boolean;
-  isDragging: boolean;
-  dragOffset: Point | null;
-  isSelected: boolean;
 };
 
-const DEFAULT_STATE: State = {
+const DEFAULT_STATE: PolygonState = {
   points: [],
+  normalizedPoints: [],
   isDrawing: false,
   previewPoint: null,
-  isFinalized: false,
   isDragging: false,
   dragOffset: null,
   isSelected: false,
+  isFinalized: false,
 };
 
 export class Polygon extends Annotation {
-  state: State;
+  protected state: PolygonState;
 
-  constructor(state?: State) {
+  constructor(state?: PolygonState) {
     super();
     this.state = state ?? { ...DEFAULT_STATE };
   }

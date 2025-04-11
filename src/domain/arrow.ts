@@ -1,4 +1,4 @@
-import { Annotation, Point, VoidClick } from "./annotation";
+import { Annotation, AnnotationState, Point, VoidClick } from "./annotation";
 
 const isPointNearLine = (
   point: Point,
@@ -34,18 +34,13 @@ const isPointNearLine = (
   return Math.sqrt(dx * dx + dy * dy) <= tolerance;
 };
 
-type State = {
-  points: Point[];
-  isDrawing: boolean;
-  previewPoint: Point | null;
-  isDragging: boolean;
+type ArrowState = AnnotationState & {
   resizingEnd: "start" | "end" | null;
-  dragOffset: Point | null;
-  isSelected: boolean;
 };
 
-const DEFAULT_STATE: State = {
+const DEFAULT_STATE: ArrowState = {
   points: [],
+  normalizedPoints: [],
   isDrawing: false,
   previewPoint: null,
   isDragging: false,
@@ -55,9 +50,9 @@ const DEFAULT_STATE: State = {
 };
 
 export class Arrow extends Annotation {
-  state: State;
+  protected state: ArrowState;
 
-  constructor(state?: State) {
+  constructor(state?: ArrowState) {
     super();
     this.state = state ?? { ...DEFAULT_STATE };
   }
