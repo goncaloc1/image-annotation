@@ -25,10 +25,21 @@ export class CanvasManager {
     return annotation;
   }
 
-  private render() {
+  private render({
+    skipPointsNormalization = false,
+  }: { skipPointsNormalization?: boolean } = {}) {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
-    this.annotations.forEach((annotation) => annotation.draw(this.ctx));
+    this.annotations.forEach((annotation) => {
+      if (!skipPointsNormalization) {
+        // TODO this can potentially be optimized by only calling when stricly necessary
+        annotation.refreshNormalizedPoints(
+          this.canvas.width,
+          this.canvas.height
+        );
+      }
+      annotation.draw(this.ctx);
+    });
   }
 
   setMode(mode: AnnotationMode) {
@@ -39,7 +50,19 @@ export class CanvasManager {
     this.annotations = this.annotations.filter(
       (annotation) => !annotation.isSelected()
     );
-    this.render();
+    this.render({ skipPointsNormalization: true });
+  }
+
+  /**
+   * Recalculate absolute coordinates based on normalized values
+   * Necessary when the canvas is resized
+   */
+  refreshPoints() {
+    this.annotations.forEach((annotation) =>
+      annotation.refreshPoints(this.canvas.width, this.canvas.height)
+    );
+
+    this.render({ skipPointsNormalization: true });
   }
 
   handleMouseDown(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {

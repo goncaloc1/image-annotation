@@ -3,6 +3,17 @@ import { useEffect, MouseEventHandler, useState, RefObject } from "react";
 import { AnnotationMode } from "@/app/types";
 import { CanvasManager } from "@/domain/canvas-manager";
 
+/**
+ * Match canvas size to the image
+ */
+const refreshCanvasSize = (
+  canvas: HTMLCanvasElement,
+  image: HTMLImageElement
+) => {
+  canvas.width = image.clientWidth;
+  canvas.height = image.clientHeight;
+};
+
 type UseCanvasProps = {
   canvasRef: RefObject<HTMLCanvasElement | null>;
   image: HTMLImageElement | null;
@@ -26,9 +37,7 @@ const useCanvas = ({ canvasRef, image, mode }: UseCanvasProps) => {
       throw Error("Failed to get canvas context");
     }
 
-    // Match canvas size to the image
-    canvasRef.current.width = image.clientWidth;
-    canvasRef.current.height = image.clientHeight;
+    refreshCanvasSize(canvasRef.current, image);
 
     setCanvasManager(new CanvasManager(mode, canvasRef.current, canvasContext));
   }, [canvasRef, image, canvasManager, mode]);
@@ -47,6 +56,21 @@ const useCanvas = ({ canvasRef, image, mode }: UseCanvasProps) => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [canvasManager]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (!canvasRef.current || !image) return;
+
+      refreshCanvasSize(canvasRef.current, image);
+
+      canvasManager?.refreshPoints();
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [canvasRef, image, canvasManager]);
 
   const handleMouseDown: MouseEventHandler<HTMLCanvasElement> = (event) =>
     canvasManager?.handleMouseDown(event);

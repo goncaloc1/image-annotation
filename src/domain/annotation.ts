@@ -35,4 +35,21 @@ export abstract class Annotation {
   ): void;
 
   abstract handleMouseUp(): void;
+
+  /**
+   * Recalculate absolute coordinates based on normalized values
+   */
+  refreshPoints = (width: number, height: number) => {
+    this.state.points = this.state.normalizedPoints.map((point) => ({
+      x: point.x * width,
+      y: point.y * height,
+    }));
+  };
+
+  refreshNormalizedPoints = (width: number, height: number) => {
+    this.state.normalizedPoints = this.state.points.map((point) => ({
+      x: point.x / width,
+      y: point.y / height,
+    }));
+  };
 }
