@@ -27,8 +27,13 @@ export class CanvasManager {
 
   private render({
     skipPointsNormalization = false,
-  }: { skipPointsNormalization?: boolean } = {}) {
-    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    image,
+  }: { skipPointsNormalization?: boolean; image?: HTMLImageElement } = {}) {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    if (image) {
+      this.ctx.drawImage(image, 0, 0, this.canvas.width, this.canvas.height);
+    }
 
     this.annotations.forEach((annotation) => {
       if (!skipPointsNormalization) {
@@ -40,6 +45,26 @@ export class CanvasManager {
       }
       annotation.draw(this.ctx);
     });
+  }
+
+  /**
+   * Export the canvas as a PNG image
+   */
+  export(image: HTMLImageElement) {
+    this.render({ skipPointsNormalization: true, image });
+
+    this.canvas.toBlob((blob) => {
+      if (!blob) return;
+
+      // Create a download link
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "annotations.png";
+      link.click();
+
+      // Clean up the object URL
+      URL.revokeObjectURL(link.href);
+    }, "image/png");
   }
 
   setMode(mode: AnnotationMode) {

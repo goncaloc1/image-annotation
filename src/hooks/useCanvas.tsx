@@ -93,7 +93,19 @@ const useCanvas = ({ canvasRef, image, mode }: UseCanvasProps) => {
     [canvasManager]
   );
 
-  return { handleMouseDown, handleMouseMove, handleMouseUp, clearCanvas };
+  const exportImage = useCallback(() => {
+    if (!image) return;
+
+    canvasManager?.export(image);
+  }, [image, canvasManager]);
+
+  return {
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    clearCanvas,
+    exportImage,
+  };
 };
 
 export default useCanvas;
