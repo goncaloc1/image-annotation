@@ -7,27 +7,44 @@ type AnnotationProps = {
   image: HTMLImageElement | null;
   mode: AnnotationMode;
   imageId: string | null;
+  exportTrigger?: number;
 };
 
-const Annotation = ({ image, mode, imageId }: AnnotationProps) => {
+const Annotation = ({
+  image,
+  mode,
+  imageId,
+  exportTrigger,
+}: AnnotationProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const { handleMouseDown, handleMouseMove, handleMouseUp, clearCanvas } =
-    useCanvas({
-      canvasRef,
-      image,
-      mode,
-    });
+  const {
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    clearCanvas,
+    exportImage,
+  } = useCanvas({
+    canvasRef,
+    image,
+    mode,
+  });
 
   useEffect(clearCanvas, [imageId, clearCanvas]);
 
+  useEffect(() => {
+    if (exportTrigger) exportImage();
+  }, [exportTrigger, exportImage]);
+
   return (
-    <canvas
-      ref={canvasRef}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+      />
+    </>
   );
 };
 

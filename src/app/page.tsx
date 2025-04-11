@@ -11,6 +11,7 @@ export default function Home() {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [mode, setMode] = useState<AnnotationMode>("polygon");
   const [base64Image, setBase64Image] = useState<string | null>(null);
+  const [exportTrigger, setExportTrigger] = useState(0);
 
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -24,12 +25,22 @@ export default function Home() {
     <div className={styles.page}>
       <header className={styles.header}>
         <AnnotationMenu mode={mode} setMode={setMode} />
-        <ImageUploader setBase64Image={setBase64Image} />
+        <div>
+          <button onClick={() => setExportTrigger((value) => value + 1)}>
+            Export
+          </button>
+          <ImageUploader setBase64Image={setBase64Image} />
+        </div>
       </header>
       <main className={styles.main}>
         <div className={styles.image_container}>
           <img src={base64Image ?? "/warehouse2.jpg"} alt="warehouse image" />
-          <Annotation image={image} mode={mode} imageId={base64Image} />
+          <Annotation
+            image={image}
+            mode={mode}
+            imageId={base64Image}
+            exportTrigger={exportTrigger}
+          />
         </div>
       </main>
     </div>

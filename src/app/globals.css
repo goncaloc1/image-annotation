@@ -24,7 +24,8 @@ button,
   transition: background-color 0.1s, color 0.1s, font-weight 0.1s;
 }
 
-button:hover {
+button:hover,
+.button:hover {
   background-color: #666;
 }
 

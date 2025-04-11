@@ -15,17 +15,15 @@ const ImageUploader = ({ setBase64Image }: ImageUploaderProps) => {
   };
 
   return (
-    <div style={{ marginRight: "32px" }}>
-      <label className="button">
-        Upload Image
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          className="hidden"
-        />
-      </label>
-    </div>
+    <label className="button" style={{ marginRight: "32px" }}>
+      Upload Image
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleImageUpload}
+        className="hidden"
+      />
+    </label>
   );
 };
 

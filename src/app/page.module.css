@@ -30,19 +30,3 @@
 .image_container canvas {
   position: absolute;
 }
-
-.button {
-  padding: 10px 20px;
-  margin: 5px;
-  border: 0px;
-  background-color: #444;
-  color: #bbb;
-  cursor: pointer;
-  border-radius: 4px;
-  min-width: 100px;
-  transition: background-color 0.1s, color 0.1s, font-weight 0.1s;
-}
-
-.button:hover {
-  background-color: #666;
-}
