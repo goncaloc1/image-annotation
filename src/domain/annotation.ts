@@ -20,8 +20,6 @@ export abstract class Annotation {
 
   constructor() {}
 
-  abstract isSelected(): boolean;
-
   abstract draw(ctx: CanvasRenderingContext2D): void;
 
   abstract handleMouseDown(
@@ -35,6 +33,10 @@ export abstract class Annotation {
   ): void;
 
   abstract handleMouseUp(): void;
+
+  isSelected = () => this.state.isSelected;
+
+  isDrawing = () => this.state.isDrawing;
 
   /**
    * Recalculate absolute coordinates based on normalized values

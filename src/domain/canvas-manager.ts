@@ -46,13 +46,6 @@ export class CanvasManager {
     this.mode = mode;
   }
 
-  deleteSelected() {
-    this.annotations = this.annotations.filter(
-      (annotation) => !annotation.isSelected()
-    );
-    this.render({ skipPointsNormalization: true });
-  }
-
   /**
    * Recalculate absolute coordinates based on normalized values
    * Necessary when the canvas is resized
@@ -62,6 +55,26 @@ export class CanvasManager {
       annotation.refreshPoints(this.canvas.width, this.canvas.height)
     );
 
+    this.render({ skipPointsNormalization: true });
+  }
+
+  /**
+   * Delete selected annotations
+   */
+  clearSelected() {
+    this.annotations = this.annotations.filter(
+      (annotation) => !annotation.isSelected()
+    );
+    this.render({ skipPointsNormalization: true });
+  }
+
+  /**
+   * Clear the on-going drawing
+   */
+  clearDrawing() {
+    this.annotations = this.annotations.filter(
+      (annotation) => !annotation.isDrawing()
+    );
     this.render({ skipPointsNormalization: true });
   }
 

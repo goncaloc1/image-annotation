@@ -57,10 +57,6 @@ export class Arrow extends Annotation {
     this.state = state ?? { ...DEFAULT_STATE };
   }
 
-  isSelected() {
-    return this.state.isSelected;
-  }
-
   draw(ctx: CanvasRenderingContext2D) {
     if (this.state.points.length < 2 && !this.state.previewPoint) return;
 

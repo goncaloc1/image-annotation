@@ -47,8 +47,10 @@ const useCanvas = ({ canvasRef, image, mode }: UseCanvasProps) => {
   }, [canvasManager, mode]);
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) =>
-      event.key === "Backspace" && canvasManager?.deleteSelected();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Backspace") canvasManager?.clearSelected();
+      if (event.key === "Escape") canvasManager?.clearDrawing();
+    };
 
     window.addEventListener("keydown", handleKeyDown);
 
