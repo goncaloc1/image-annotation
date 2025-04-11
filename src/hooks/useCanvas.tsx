@@ -1,4 +1,10 @@
-import { useEffect, MouseEventHandler, useState, RefObject } from "react";
+import {
+  useEffect,
+  MouseEventHandler,
+  useState,
+  RefObject,
+  useCallback,
+} from "react";
 
 import { AnnotationMode } from "@/app/types";
 import { CanvasManager } from "@/domain/canvas-manager";
@@ -82,7 +88,10 @@ const useCanvas = ({ canvasRef, image, mode }: UseCanvasProps) => {
 
   const handleMouseUp = () => canvasManager?.handleMouseUp();
 
-  const clearCanvas = () => canvasManager?.clear();
+  const clearCanvas = useCallback(
+    () => canvasManager?.clear(),
+    [canvasManager]
+  );
 
   return { handleMouseDown, handleMouseMove, handleMouseUp, clearCanvas };
 };
