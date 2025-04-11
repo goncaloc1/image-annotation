@@ -1,5 +1,6 @@
 "use client";
 
+import Annotation from "@/components/annotation";
 import styles from "./page.module.css";
 import { useEffect, useState } from "react";
 import AnnotationMenu from "@/components/annotation-menu/annotation-menu";
@@ -28,6 +29,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.image_container}>
           <img src={base64Image ?? "/warehouse2.jpg"} alt="warehouse image" />
+          <Annotation image={image} mode={mode} />
         </div>
       </main>
     </div>
