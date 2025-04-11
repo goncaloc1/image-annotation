@@ -29,7 +29,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.image_container}>
           <img src={base64Image ?? "/warehouse2.jpg"} alt="warehouse image" />
-          <Annotation image={image} mode={mode} />
+          <Annotation image={image} mode={mode} imageId={base64Image} />
         </div>
       </main>
     </div>

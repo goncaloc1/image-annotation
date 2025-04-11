@@ -80,7 +80,9 @@ const useCanvas = ({ canvasRef, image, mode }: UseCanvasProps) => {
 
   const handleMouseUp = () => canvasManager?.handleMouseUp();
 
-  return { handleMouseDown, handleMouseMove, handleMouseUp };
+  const clearCanvas = () => canvasManager?.clear();
+
+  return { handleMouseDown, handleMouseMove, handleMouseUp, clearCanvas };
 };
 
 export default useCanvas;

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { AnnotationMode } from "@/app/types";
 
 import useCanvas from "@/hooks/useCanvas";
@@ -6,16 +6,20 @@ import useCanvas from "@/hooks/useCanvas";
 type AnnotationProps = {
   image: HTMLImageElement | null;
   mode: AnnotationMode;
+  imageId: string | null;
 };
 
-const Annotation = ({ image, mode }: AnnotationProps) => {
+const Annotation = ({ image, mode, imageId }: AnnotationProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const { handleMouseDown, handleMouseMove, handleMouseUp } = useCanvas({
-    canvasRef,
-    image,
-    mode,
-  });
+  const { handleMouseDown, handleMouseMove, handleMouseUp, clearCanvas } =
+    useCanvas({
+      canvasRef,
+      image,
+      mode,
+    });
+
+  useEffect(clearCanvas, [imageId, clearCanvas]);
 
   return (
     <canvas

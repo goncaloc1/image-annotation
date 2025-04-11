@@ -65,6 +65,14 @@ export class CanvasManager {
     this.render({ skipPointsNormalization: true });
   }
 
+  /**
+   * Clear all annotations
+   */
+  clear() {
+    this.annotations = [];
+    this.render();
+  }
+
   handleMouseDown(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
     let isVoidClick: VoidClick = true;
 
