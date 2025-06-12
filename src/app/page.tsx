@@ -4,14 +4,18 @@ import Annotation from "@/components/annotation";
 import styles from "./page.module.css";
 import { useEffect, useState } from "react";
 import AnnotationControls from "@/components/annotation-controls/annotation-controls";
-import { AnnotationMode } from "./types";
 import ImageControls from "@/components/image-controls/image-controls";
+import {
+  StateManagementProvider,
+  useStateManagement,
+} from "@/state/useStateManagement";
 
-export default function Home() {
+const Page = () => {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
-  const [mode, setMode] = useState<AnnotationMode>("polygon");
   const [base64Image, setBase64Image] = useState<string | null>(null);
   const [exportTrigger, setExportTrigger] = useState(0);
+
+  const state = useStateManagement();
 
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -24,7 +28,7 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <AnnotationControls mode={mode} setMode={setMode} />
+        <AnnotationControls mode={state.mode} />
         <ImageControls
           setBase64Image={setBase64Image}
           setExportTrigger={setExportTrigger}
@@ -35,12 +39,20 @@ export default function Home() {
           <img src={base64Image ?? "/warehouse2.jpg"} alt="warehouse image" />
           <Annotation
             image={image}
-            mode={mode}
+            mode={state.mode}
             imageId={base64Image}
             exportTrigger={exportTrigger}
           />
         </div>
       </main>
     </div>
+  );
+};
+
+export default function Home() {
+  return (
+    <StateManagementProvider>
+      <Page />
+    </StateManagementProvider>
   );
 }

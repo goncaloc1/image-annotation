@@ -1,23 +1,32 @@
 import { AnnotationMode } from "@/app/types";
 import styles from "./annotation-controls.module.css";
+import {
+  StateManagementActionType,
+  useStateManagementDispatch,
+} from "@/state/useStateManagement";
 
 type AnnotationControlsProps = {
   mode: AnnotationMode;
-  setMode: (mode: AnnotationMode) => void;
 };
 
-const AnnotationControls = ({ mode, setMode }: AnnotationControlsProps) => {
+const AnnotationControls = ({ mode }: AnnotationControlsProps) => {
+  const dispatch = useStateManagementDispatch();
+
   return (
     <div className={styles.annotation_menu}>
       <button
         className={mode === "polygon" ? "selected" : ""}
-        onClick={() => setMode("polygon")}
+        onClick={() =>
+          dispatch({ type: StateManagementActionType.SET_POLYGON_MODE })
+        }
       >
         Polygon
       </button>
       <button
         className={mode === "arrow" ? "selected" : ""}
-        onClick={() => setMode("arrow")}
+        onClick={() =>
+          dispatch({ type: StateManagementActionType.SET_ARROW_MODE })
+        }
       >
         Arrow
       </button>
