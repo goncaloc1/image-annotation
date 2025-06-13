@@ -5,16 +5,13 @@ import styles from "./page.module.css";
 import { useEffect, useState } from "react";
 import AnnotationControls from "@/components/annotation-controls/annotation-controls";
 import ImageControls from "@/components/image-controls/image-controls";
-import {
-  StateManagementProvider,
-  useStateManagement,
-} from "@/state/useStateManagement";
+import { StateManagerProvider, useStateManager } from "@/state/useStateManager";
 
 const Page = () => {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [base64Image, setBase64Image] = useState<string | null>(null);
 
-  const state = useStateManagement();
+  const state = useStateManager();
 
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -47,8 +44,8 @@ const Page = () => {
 
 export default function Home() {
   return (
-    <StateManagementProvider>
+    <StateManagerProvider>
       <Page />
-    </StateManagementProvider>
+    </StateManagerProvider>
   );
 }

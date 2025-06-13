@@ -1,22 +1,20 @@
 import { Dispatch, SetStateAction } from "react";
 import ImageUploader from "../image-uploader/image-uploader";
 import {
-  StateManagementActionType,
-  useStateManagementDispatch,
-} from "@/state/useStateManagement";
+  StateManagerActionType,
+  useStateManagerDispatch,
+} from "@/state/useStateManager";
 
 type ImageControlsProps = {
   setBase64Image: Dispatch<SetStateAction<string | null>>;
 };
 
 const ImageControls = ({ setBase64Image }: ImageControlsProps) => {
-  const dispatch = useStateManagementDispatch();
+  const dispatch = useStateManagerDispatch();
 
   return (
     <div>
-      <button
-        onClick={() => dispatch({ type: StateManagementActionType.EXPORT })}
-      >
+      <button onClick={() => dispatch({ type: StateManagerActionType.EXPORT })}>
         Export
       </button>
       <ImageUploader setBase64Image={setBase64Image} />
