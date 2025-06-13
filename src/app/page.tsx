@@ -13,7 +13,6 @@ import {
 const Page = () => {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [base64Image, setBase64Image] = useState<string | null>(null);
-  const [exportTrigger, setExportTrigger] = useState(0);
 
   const state = useStateManagement();
 
@@ -29,10 +28,7 @@ const Page = () => {
     <div className={styles.page}>
       <header className={styles.header}>
         <AnnotationControls mode={state.mode} />
-        <ImageControls
-          setBase64Image={setBase64Image}
-          setExportTrigger={setExportTrigger}
-        />
+        <ImageControls setBase64Image={setBase64Image} />
       </header>
       <main className={styles.main}>
         <div className={styles.image_container}>
@@ -41,7 +37,7 @@ const Page = () => {
             image={image}
             mode={state.mode}
             imageId={base64Image}
-            exportTrigger={exportTrigger}
+            exportTrigger={state.exportTrigger}
           />
         </div>
       </main>

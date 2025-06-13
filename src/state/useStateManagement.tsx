@@ -1,6 +1,6 @@
 import { AnnotationMode } from "@/app/types";
 import React, {
-  ActionDispatch,
+  Dispatch,
   createContext,
   ReactNode,
   useContext,
@@ -11,12 +11,14 @@ type StateManagementProps = {
   image: HTMLImageElement | null;
   mode: AnnotationMode;
   base64Image: string | null;
+  exportTrigger: number;
 };
 
 const getDefault = (): StateManagementProps => ({
   image: null,
   mode: "polygon",
   base64Image: null,
+  exportTrigger: 0,
 });
 
 const defaultState = getDefault();
@@ -25,16 +27,16 @@ const StateManagementContext =
   createContext<StateManagementProps>(defaultState);
 
 const StateManagementDispatchContext =
-  createContext<ActionDispatch<any> | null>(null);
+  createContext<Dispatch<StateManagementAction> | null>(null);
 
 export enum StateManagementActionType {
   SET_POLYGON_MODE = "set_polygon_mode",
   SET_ARROW_MODE = "set_arrow_mode",
+  EXPORT = "export",
 }
 
 type StateManagementAction = {
   type: StateManagementActionType;
-  payload: any;
 };
 
 const stateManagementReducer = (
@@ -46,6 +48,8 @@ const stateManagementReducer = (
       return state.mode !== "polygon" ? { ...state, mode: "polygon" } : state;
     case StateManagementActionType.SET_ARROW_MODE:
       return state.mode !== "arrow" ? { ...state, mode: "arrow" } : state;
+    case StateManagementActionType.EXPORT:
+      return { ...state, exportTrigger: state.exportTrigger + 1 };
     default:
       throw Error("Unknown state management action type");
   }
