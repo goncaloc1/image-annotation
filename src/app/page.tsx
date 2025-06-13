@@ -9,7 +9,6 @@ import { StateManagerProvider, useStateManager } from "@/state/useStateManager";
 
 const Page = () => {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
-  const [base64Image, setBase64Image] = useState<string | null>(null);
 
   const state = useStateManager();
 
@@ -25,15 +24,18 @@ const Page = () => {
     <div className={styles.page}>
       <header className={styles.header}>
         <AnnotationControls mode={state.mode} />
-        <ImageControls setBase64Image={setBase64Image} />
+        <ImageControls />
       </header>
       <main className={styles.main}>
         <div className={styles.image_container}>
-          <img src={base64Image ?? "/warehouse2.jpg"} alt="warehouse image" />
+          <img
+            src={state.base64Image ?? "/warehouse2.jpg"}
+            alt="warehouse image"
+          />
           <Annotation
             image={image}
             mode={state.mode}
-            imageId={base64Image}
+            imageId={state.base64Image}
             exportTrigger={state.exportTrigger}
           />
         </div>

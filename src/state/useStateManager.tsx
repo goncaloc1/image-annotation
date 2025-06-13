@@ -32,10 +32,12 @@ export enum StateManagerActionType {
   SET_POLYGON_MODE = "set_polygon_mode",
   SET_ARROW_MODE = "set_arrow_mode",
   EXPORT = "export",
+  SET_BASE64_IMAGE = "set_base64_image",
 }
 
 type StateManagerAction = {
   type: StateManagerActionType;
+  payload?: string;
 };
 
 const StateManagerReducer = (
@@ -49,6 +51,8 @@ const StateManagerReducer = (
       return state.mode !== "arrow" ? { ...state, mode: "arrow" } : state;
     case StateManagerActionType.EXPORT:
       return { ...state, exportTrigger: state.exportTrigger + 1 };
+    case StateManagerActionType.SET_BASE64_IMAGE:
+      return { ...state, base64Image: action.payload ?? null };
     default:
       throw Error("Unknown state management action type");
   }
