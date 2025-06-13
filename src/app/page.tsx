@@ -2,23 +2,12 @@
 
 import Annotation from "@/components/annotation";
 import styles from "./page.module.css";
-import { useEffect, useState } from "react";
 import AnnotationControls from "@/components/annotation-controls/annotation-controls";
 import ImageControls from "@/components/image-controls/image-controls";
 import { StateManagerProvider, useStateManager } from "@/state/useStateManager";
 
 const Page = () => {
-  const [image, setImage] = useState<HTMLImageElement | null>(null);
-
   const state = useStateManager();
-
-  useEffect(() => {
-    if (typeof document !== "undefined") {
-      // This is a workaround for the SSR issue where document is not available
-      // useRef wouldn't trigger a re-render hence not using it
-      setImage(document.querySelector("img"));
-    }
-  }, []);
 
   return (
     <div className={styles.page}>
@@ -33,7 +22,6 @@ const Page = () => {
             alt="warehouse image"
           />
           <Annotation
-            image={image}
             mode={state.mode}
             imageId={state.base64Image}
             exportTrigger={state.exportTrigger}

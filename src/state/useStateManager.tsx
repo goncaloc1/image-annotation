@@ -8,14 +8,12 @@ import React, {
 } from "react";
 
 type StateManagerProps = {
-  image: HTMLImageElement | null;
   mode: AnnotationMode;
   base64Image: string | null;
   exportTrigger: number;
 };
 
 const getDefault = (): StateManagerProps => ({
-  image: null,
   mode: "polygon",
   base64Image: null,
   exportTrigger: 0,
