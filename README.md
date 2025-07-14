@@ -1,3 +1,7 @@
+## About
+
+A canvas-based image annotation tool that supports polygon and directional arrow annotations.
+
 ## Preview
 
 https://image-annotation-amber.vercel.app/
@@ -12,8 +16,6 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the Image Annotation Builder app.
